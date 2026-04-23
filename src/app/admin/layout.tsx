@@ -33,7 +33,7 @@ function AdminShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-brand rounded-full flex items-center justify-center text-sm font-bold">MG</div>
             <div>
-              <p className="text-sm font-bold">MG Carp</p>
+              <p className="text-sm font-bold">Lucian Demo Carp</p>
               <p className="text-[10px] text-slate-400">Admin Panel</p>
             </div>
           </div>

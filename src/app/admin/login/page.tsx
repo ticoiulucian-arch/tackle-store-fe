@@ -27,9 +27,9 @@ export default function AdminLoginPage() {
     <div className="min-h-screen bg-surface-dark flex items-center justify-center">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm">
         <div className="text-center mb-6">
-          <div className="w-14 h-14 bg-brand rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">MG</div>
+          <div className="w-14 h-14 bg-brand rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">Lucian Demo</div>
           <h1 className="text-xl font-bold text-slate-800">Admin Panel</h1>
-          <p className="text-sm text-slate-500">MG Carp – Method Feeder Shop</p>
+          <p className="text-sm text-slate-500">Lucian Demo – Method Feeder Shop</p>
         </div>
         {error && <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg mb-4">{error}</div>}
         <form onSubmit={handleSubmit} className="space-y-4">

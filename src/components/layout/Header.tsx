@@ -40,7 +40,7 @@ export default function Header() {
 				<div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
 					<div className="flex gap-4">
 						<span>📞 +40 700 000 000</span>
-						<span className="hidden sm:inline">📧 contact@mgcarp.ro</span>
+						<span className="hidden sm:inline">📧 contact@LucianDemoCarp.ro</span>
 					</div>
 					<div className="flex items-center gap-3">
 						<span>{t('common.freeShippingBanner')}</span>
@@ -54,10 +54,10 @@ export default function Header() {
 				<div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
 					<Link href="/" className="flex items-center gap-2 shrink-0">
 						<div className="w-10 h-10 bg-brand rounded-full flex items-center justify-center text-white text-lg font-bold">
-							MG
+							Lucian Demo
 						</div>
 						<div className="hidden sm:block">
-							<p className="text-lg font-bold text-slate-800 leading-tight">MG Carp</p>
+							<p className="text-lg font-bold text-slate-800 leading-tight">Lucian Demo Carp</p>
 							<p className="text-[10px] text-slate-400 uppercase tracking-wider">
 								Method Feeder Shop
 							</p>
