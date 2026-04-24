@@ -12,12 +12,28 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const CATEGORY_TYPE_MAP: Record<string, string> = {
-    'Feeder Rods': 'ROD', 'Feeder Reels': 'REEL', 'Method Feeders': 'FEEDER',
-    'Baits & Groundbait': 'BAIT', 'Rigs & Hooks': 'RIG', 'Lines & Leaders': 'LINE',
-    'Accessories': 'ACCESSORY',
-    'Lansete Feeder': 'ROD', 'Mulinete Feeder': 'REEL', 'Hranitoare Method Feeder': 'FEEDER',
-    'Nade și Momeli': 'BAIT', 'Monturi și Cârlige': 'RIG', 'Fire și Șnururi': 'LINE',
-    'Accesorii Method Feeder': 'ACCESSORY', 'Suporturi și Echipament': 'ACCESSORY',
+    'Rods': 'ROD', 'Reels': 'REEL', 'Feeders & Weights': 'FEEDER',
+    'Baits & Groundbait': 'BAIT', 'Rigs & Terminal Tackle': 'RIG', 'Lines & Leaders': 'LINE',
+    'Hooks': 'HOOK', 'Accessories': 'ACCESSORY', 'Landing Nets & Keepnets': 'NET',
+    'Rod Pods & Bite Alarms': 'ACCESSORY', 'Luggage & Storage': 'ACCESSORY',
+    'Chairs & Bedchairs': 'ACCESSORY', 'Clothing & Footwear': 'ACCESSORY',
+    'Electronics': 'ACCESSORY',
+    'Feeder Rods': 'ROD', 'Match Rods': 'ROD', 'Bolognese Rods': 'ROD',
+    'Spinning Rods': 'ROD', 'Carp Rods': 'ROD', 'Float Rods': 'ROD', 'Telescopic Rods': 'ROD',
+    'Spinning Reels': 'REEL', 'Baitcasting Reels': 'REEL', 'Big Pit Reels': 'REEL',
+    'Feeder Reels': 'REEL', 'Match Reels': 'REEL',
+    'Monofilament': 'LINE', 'Fluorocarbon': 'LINE', 'Braided Line': 'LINE',
+    'Leaders': 'LINE', 'Shock Leaders': 'LINE',
+    'Single Hooks': 'HOOK', 'Treble Hooks': 'HOOK', 'Barbless Hooks': 'HOOK',
+    'Carp Hooks': 'HOOK', 'Feeder Hooks': 'HOOK',
+    'Method Feeders': 'FEEDER', 'Cage Feeders': 'FEEDER', 'Flat Feeders': 'FEEDER',
+    'Leads & Sinkers': 'LEAD', 'Feeder Moulds': 'FEEDER',
+    'Boilies': 'BAIT', 'Pellets': 'BAIT', 'Groundbait Mixes': 'BAIT',
+    'Pop-ups & Wafters': 'BAIT', 'Liquid Additives': 'BAIT', 'Dips & Glugs': 'BAIT',
+    'Corn & Particles': 'BAIT',
+    'Ready Rigs': 'RIG', 'Swivels & Clips': 'RIG', 'Beads & Sleeves': 'RIG',
+    'Lead Clips': 'RIG', 'Hair Rigs': 'RIG', 'Rig Tubing': 'RIG',
+    'Landing Nets': 'NET', 'Keepnets': 'NET', 'Net Handles': 'NET', 'Net Accessories': 'NET',
 };
 
 export default function AdminProductForm() {
@@ -25,6 +41,7 @@ export default function AdminProductForm() {
     const isNew = id === 'new';
     const router = useRouter();
     const [categories, setCategories] = useState<any[]>([]);
+    const [selectedParentId, setSelectedParentId] = useState<string>('');
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
     const t = useTranslations('admin');
@@ -38,6 +55,24 @@ export default function AdminProductForm() {
         adminGetCategories().then(setCategories).catch(() => {
         });
     }, []);
+
+    // When editing, auto-select parent category based on loaded categoryId
+    useEffect(() => {
+        if (!isNew && id && categories.length > 0 && form.categoryId) {
+            const catId = form.categoryId;
+            // Check if it's a subcategory
+            for (const parent of categories) {
+                if (parent.children?.some((c: any) => String(c.id) === String(catId))) {
+                    setSelectedParentId(String(parent.id));
+                    return;
+                }
+            }
+            // It's a root category
+            if (categories.some(c => String(c.id) === String(catId))) {
+                setSelectedParentId(String(catId));
+            }
+        }
+    }, [categories, form.categoryId, isNew, id]);
 
     useEffect(() => {
         if (!isNew && id) {
@@ -128,14 +163,19 @@ export default function AdminProductForm() {
                         <input placeholder={t('brand')} value={form.brand} onChange={set('brand')}
                                className={inputCls}/>
                         <div>
-                            <select value={form.categoryId} onChange={e => {
-                                const catId = e.target.value;
-                                const cat = categories.find(c => String(c.id) === catId);
-                                const autoType = cat ? (CATEGORY_TYPE_MAP[cat.name] || form.type) : form.type;
-                                setForm(f => ({...f, categoryId: catId, type: autoType}));
-                                // Auto-populate specs from category template if specs are empty
-                                if (cat?.specTemplate?.length && specs.length === 0) {
-                                    setSpecs(cat.specTemplate.map((key: string) => ({key, value: ''})));
+                            <select value={selectedParentId} onChange={e => {
+                                const parentId = e.target.value;
+                                setSelectedParentId(parentId);
+                                const parent = categories.find(c => String(c.id) === parentId);
+                                // If parent has no children, use parent as category
+                                if (parent && (!parent.children || parent.children.length === 0)) {
+                                    const autoType = CATEGORY_TYPE_MAP[parent.name] || form.type;
+                                    setForm(f => ({...f, categoryId: parentId, type: autoType}));
+                                    if (parent.specTemplate?.length && specs.length === 0) {
+                                        setSpecs(parent.specTemplate.map((key: string) => ({key, value: ''})));
+                                    }
+                                } else {
+                                    setForm(f => ({...f, categoryId: ''}));
                                 }
                             }} className={inputCls}>
                                 <option value="">{t('selectCategory')}</option>
@@ -143,6 +183,29 @@ export default function AdminProductForm() {
                             </select>
                         </div>
                     </div>
+                    {/* Subcategory dropdown */}
+                    {selectedParentId && (() => {
+                        const parent = categories.find(c => String(c.id) === selectedParentId);
+                        if (!parent?.children?.length) return null;
+                        return (
+                            <div>
+                                <select value={form.categoryId} onChange={e => {
+                                    const subId = e.target.value;
+                                    const sub = parent.children.find((c: any) => String(c.id) === subId);
+                                    const autoType = sub ? (CATEGORY_TYPE_MAP[sub.name] || CATEGORY_TYPE_MAP[parent.name] || form.type) : form.type;
+                                    setForm(f => ({...f, categoryId: subId, type: autoType}));
+                                    if (sub?.specTemplate?.length && specs.length === 0) {
+                                        setSpecs(sub.specTemplate.map((key: string) => ({key, value: ''})));
+                                    } else if (parent.specTemplate?.length && specs.length === 0) {
+                                        setSpecs(parent.specTemplate.map((key: string) => ({key, value: ''})));
+                                    }
+                                }} className={inputCls}>
+                                    <option value="">— Select subcategory —</option>
+                                    {parent.children.map((c: any) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                                </select>
+                            </div>
+                        );
+                    })()}
                 </div>
 
                 {/* Image */}

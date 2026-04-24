@@ -42,6 +42,7 @@ export const adminDeleteProduct = (id: number) =>
 
 // Categories CRUD
 export const adminGetCategories = () => adminFetch<any[]>(`${BASE}/categories`);
+export const adminGetCategoriesFlat = () => adminFetch<any[]>(`${BASE}/categories/flat`);
 
 export const adminCreateCategory = (data: any) =>
   adminFetch<any>(`${BASE}/categories`, {
