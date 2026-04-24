@@ -228,12 +228,19 @@
     "copyright": "© {year} Method Feeder Shop. All rights reserved."
   },
   "categoryNames": {
-    "Feeder Rods": "Feeder Rods",
-    "Feeder Reels": "Feeder Reels",
-    "Method Feeders": "Method Feeders",
-    "Baits & Groundbait": "Baits & Groundbait",
-    "Rigs & Hooks": "Rigs & Hooks",
+    "Rods": "Rods",
+    "Reels": "Reels",
     "Lines & Leaders": "Lines & Leaders",
+    "Hooks": "Hooks",
+    "Feeders & Weights": "Feeders & Weights",
+    "Baits & Groundbait": "Baits & Groundbait",
+    "Rigs & Terminal Tackle": "Rigs & Terminal Tackle",
+    "Rod Pods & Bite Alarms": "Rod Pods & Bite Alarms",
+    "Landing Nets & Keepnets": "Landing Nets & Keepnets",
+    "Luggage & Storage": "Luggage & Storage",
+    "Chairs & Bedchairs": "Chairs & Bedchairs",
+    "Clothing & Footwear": "Clothing & Footwear",
+    "Electronics": "Electronics",
     "Accessories": "Accessories"
   }
 }

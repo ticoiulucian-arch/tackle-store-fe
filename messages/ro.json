@@ -228,12 +228,19 @@
     "copyright": "© {year} Method Feeder Shop. Toate drepturile rezervate."
   },
   "categoryNames": {
-    "Feeder Rods": "Lansete Feeder",
-    "Feeder Reels": "Mulinete Feeder",
-    "Method Feeders": "Feedere Method",
-    "Baits & Groundbait": "Momeli și Nădă",
-    "Rigs & Hooks": "Monturi și Cârlige",
+    "Rods": "Lansete",
+    "Reels": "Mulinete",
     "Lines & Leaders": "Fire și Liders",
+    "Hooks": "Cârlige",
+    "Feeders & Weights": "Feedere și Plumbi",
+    "Baits & Groundbait": "Momeli și Nădă",
+    "Rigs & Terminal Tackle": "Monturi și Accesorii Terminale",
+    "Rod Pods & Bite Alarms": "Rod Poduri și Avertizoare",
+    "Landing Nets & Keepnets": "Mincioge și Juvete",
+    "Luggage & Storage": "Bagaje și Depozitare",
+    "Chairs & Bedchairs": "Scaune și Paturi",
+    "Clothing & Footwear": "Îmbrăcăminte și Încălțăminte",
+    "Electronics": "Electronică",
     "Accessories": "Accesorii"
   }
 }
