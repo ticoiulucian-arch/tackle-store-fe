@@ -27,6 +27,7 @@ export interface Product {
     price: number;
     stockQuantity: number;
     imageUrl?: string;
+    imageUrls?: string[];
     brand: string;
     type: ProductType;
     categoryId: number;
