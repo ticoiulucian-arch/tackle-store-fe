@@ -14,8 +14,10 @@ export interface Category {
     name: string;
     description: string;
     imageUrl?: string;
+    parentId?: number;
     productCount: number;
     specTemplate?: string[];
+    children?: Category[];
 }
 
 export interface Product {
